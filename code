@@ -1,0 +1,39 @@
+install.packages("ggplot2")
+library(ggplot2)
+
+#read economy data (DJI)
+#read new cases, cumulative cases and deaths data
+DJI <- read.csv('^DJI.csv')
+cases <- read.csv('covid-19.csv')
+
+
+DJI <- DJI[c('Date','Close')]
+colnames(DJI)[2] <- 'DJI_close'
+
+#new cases each day
+ggplot(cases, aes(x=date,group=1)) + 
+  geom_line(aes(y = new), color = "red")
+
+#cumulative cases 
+ggplot(cases, aes(x=date,group=1)) + 
+  geom_line(aes(y = cumulative), color = "blue")
+
+#total deaths 
+ggplot(cases, aes(x=date,group=1)) + 
+  geom_line(aes(y = death), color = "black")
+
+#all in one graph
+ggplot(cases, aes(x=date,group=1)) + 
+       geom_line(aes(y = new), color = "red") + 
+       geom_line(aes(y = death), color = "black") +  
+       geom_line(aes(y = cumulative), color="blue") 
+      
+#Dow Jones Industrial close 
+ggplot(DJI, aes(x=Date,group=1)) + 
+  geom_line(aes(y = DJI_close), color = "green")
+
+#The DJI close graph follows the data
+#New_cases, cumulative_cases and deaths graphs make sense in general (going upward)
+#However, there are several unexpected grooves which are not consistent with datas.
+#Try to edit the data on X axis into a better format but failed.
+ 
